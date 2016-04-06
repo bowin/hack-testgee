@@ -1,4 +1,3 @@
-*.png
 node_modules
 .idea
 .vscode

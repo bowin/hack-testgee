@@ -187,21 +187,21 @@ page.open('http://www.guahao.com/register/mobile', function (status) {
           setTimeout(function () {
             page.sendEvent('mousemove', 215 + 10 * c, 148);
             console.log('i: ', 'po', 4 * c);
-            page.render('mouse-moved-'+c+'-' + Date.now() + '.png');
+            page.render('mouse-moved-'+c+'-' + '.png');
           }, 100 * c);
         })(i);
       }
       setTimeout(function () {
         page.sendEvent('mousemove', 215 + pos.x-6, 148);
-        page.render('mouse-moved-last-' + Date.now() + '.png');
+        page.render('mouse-moved-last-' +  '.png');
         setTimeout(function () {
           page.sendEvent('mouseup', 215 + pos.y-6, 148);
-          page.render('mouse-up-' + Date.now() + '.png');
+          page.render('mouse-up-'  + '.png');
         }, 30);
         setTimeout(function () {
-          page.render('mouse-over-' + Date.now() + '.png');
+          page.render('mouse-over-'  + '.png');
           page.sendEvent('click', 215, 178);
-          page.render('next-' + Date.now() + '.png');
+          page.render('next-' + '.png');
           phantom.exit();
         }, 300);
       }, 100 * (i + 2));
