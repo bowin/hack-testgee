@@ -15,7 +15,6 @@ page.open('http://www.guahao.com/register/mobile', function (status) {
       console.log(' draw background image on canvas');
       // get backgroundImage from div
       var bg = document.querySelectorAll('div.gt_cut_bg_slice')[0];
-      console.log('bg ele', bg);
       var bgUrl = bg.style['backgroundImage'];
       bgUrl = bgUrl.slice(4, -1);
       // create canvas, draw image to be detected
@@ -85,7 +84,7 @@ page.open('http://www.guahao.com/register/mobile', function (status) {
         function drawRegion(sx, sy, dx, dy) {
           context.drawImage(imageObj, sx, sy, 10, 58, dx, dy, 10, 58);
         }
-        //crop image every from given background-position and draw to canvas 
+        //crop image from given background-position and draw to canvas 
         var i = 0, dx = 0, dy = 0;
         for (i; i < arr.length; i++) {
           drawRegion(-1 * arr[i][0], -1 * arr[i][1], dx, dy);
