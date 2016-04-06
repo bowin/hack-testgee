@@ -1,31 +1,24 @@
 'use strict';
 
 var page = require('webpage').create();
-//page.setting.userAgent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.110 Safari/537.36';
 page.settings.userAgent = 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/37.0.2062.120 Safari/537.36';
 page.onConsoleMessage = function (msg) {
   console.log('brower info: ' + msg);
 };
 page.open('http://www.guahao.com/register/mobile', function (status) {
   if (status !== 'success') {
-    console.log('get page fail')
+    console.log('get page fail');
     phantom.exit();
   }
   setTimeout(function () {
     page.evaluate(function () {
-      console.log(' evaluate js');
-      console.log('get tag', document.querySelector('div.gt_cut_fullbg.gt_show'));
-      var divs = document.querySelector('div.gt_cut_fullbg.gt_show');
-      console.log('get childnotes: ', divs.childNodes.length)
-
-
-      // create canvas, draw image to be detected
+      console.log(' draw background image on canvas');
+      // get backgroundImage from div
       var bg = document.querySelectorAll('div.gt_cut_bg_slice')[0];
       console.log('bg ele', bg);
       var bgUrl = bg.style['backgroundImage'];
       bgUrl = bgUrl.slice(4, -1);
-
-
+      // create canvas, draw image to be detected
       var canvas = document.createElement('canvas');
       canvas.id = 'my-canvas';
       canvas.width = 260;
@@ -35,7 +28,7 @@ page.open('http://www.guahao.com/register/mobile', function (status) {
       var imageObj = new Image();
 
       imageObj.onload = function () {
-        // draw cropped image
+        // background-position of 52 divs 
         var arr = [[-157, -58],
           [-145, -58],
           [-265, -58],
@@ -92,7 +85,7 @@ page.open('http://www.guahao.com/register/mobile', function (status) {
         function drawRegion(sx, sy, dx, dy) {
           context.drawImage(imageObj, sx, sy, 10, 58, dx, dy, 10, 58);
         }
-
+        //crop image every from given background-position and draw to canvas 
         var i = 0, dx = 0, dy = 0;
         for (i; i < arr.length; i++) {
           drawRegion(-1 * arr[i][0], -1 * arr[i][1], dx, dy);
@@ -106,22 +99,25 @@ page.open('http://www.guahao.com/register/mobile', function (status) {
         // draw canvas on document
         document.querySelector('div.tab-main.g-clear.J_TabMain').appendChild(canvas);
       };
-      imageObj.crossOrigin = "Anonymous";
+      
+      imageObj.crossOrigin = 'Anonymous';
       imageObj.src = bgUrl;
 
+      /*
+      deprecated 
       //dispatch event, drag the knob
-      var ev = document.createEvent("MouseEvents");
-      ev.initEvent("mouseover", true, false);
+      var ev = document.createEvent('MouseEvents');
+      ev.initEvent('mouseover', true, false);
       var knob = document.querySelector('div.gt_slider_knob.gt_show');
-      console.log('get knob: ', knob.style['transform'], $('div.gt_slider_knob.gt_show').offset());
-
+     
       var evResult = knob.dispatchEvent(ev);
       console.log(knob, 'get ev result', evResult);
       return $('div.gt_slider_knob.gt_show').offset();
+      */
     }); // js evaluate end
 
     setTimeout(function () {
-      console.log('out of evaluate ');
+      console.log('calc x offset of knob');
       var pos = page.evaluate(function () {
         var canvas = document.getElementById('my-canvas');
         var context = canvas.getContext('2d');
@@ -171,9 +167,6 @@ page.open('http://www.guahao.com/register/mobile', function (status) {
             console.log('lp length', linePoints.length);
             if (linePoints.length > 15) {
               return linePoints[0];
-              linePoints.forEach(function (xy) {
-                console.log([xy.x, xy.y].join(','))
-              })
             }
             points.push(linePoints);
             linePoints = [];
@@ -185,7 +178,6 @@ page.open('http://www.guahao.com/register/mobile', function (status) {
         console.error('cannnot detect');
         page.render('web/fail-' + Date.now() + '.png');
         phantom.exit();
-        return;
       }
       console.log('get pos', pos.x, pos.y);
       page.sendEvent('mousedown', 215, 148);
@@ -198,7 +190,7 @@ page.open('http://www.guahao.com/register/mobile', function (status) {
             console.log('i: ', 'po', 4 * c);
             page.render('mouse-moved-'+c+'-' + Date.now() + '.png');
           }, 100 * c);
-        })(i)
+        })(i);
       }
       setTimeout(function () {
         page.sendEvent('mousemove', 215 + pos.x-6, 148);
@@ -206,15 +198,15 @@ page.open('http://www.guahao.com/register/mobile', function (status) {
         setTimeout(function () {
           page.sendEvent('mouseup', 215 + pos.y-6, 148);
           page.render('mouse-up-' + Date.now() + '.png');
-        }, 30)
+        }, 30);
         setTimeout(function () {
           page.render('mouse-over-' + Date.now() + '.png');
           page.sendEvent('click', 215, 178);
           page.render('next-' + Date.now() + '.png');
           phantom.exit();
-        }, 300)
+        }, 300);
       }, 100 * (i + 2));
-    }, 2000)
+    }, 2000);
 
   }, 4000);
 });

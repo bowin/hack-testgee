@@ -13,5 +13,10 @@
     "koa": "^1.2.0",
     "koa-static": "^2.0.0",
     "phantom": "^2.0.10"
+  },
+  "devDependencies": {
+    "eslint": "^2.7.0",
+    "eslint-config-airbnb": "^6.2.0",
+    "eslint-plugin-react": "^4.2.3"
   }
 }
