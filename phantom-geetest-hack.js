@@ -101,6 +101,10 @@ page.open('http://www.guahao.com/register/mobile', function (status) {
       
       imageObj.crossOrigin = 'Anonymous';
       imageObj.src = bgUrl;
+      document.querySelector('div.gt_slider_knob.gt_show').addEventListener('mousemove',function(e){
+        //console.log(e.clientX, e.clientY, e.timeStamp)
+        console.log('mouse moved',e.pageX, e.pageY, e.timeStamp);
+      });
 
       /*
       deprecated 
@@ -183,17 +187,17 @@ page.open('http://www.guahao.com/register/mobile', function (status) {
       page.sendEvent('mousedown', 215, 148);
 
       var i ;
-      for (i = 0; i < (pos.x - 6) / 10; i++) {
+      for (i = 0; i < (pos.x - 6) ; i++) {
         (function (c) {
           setTimeout(function () {
-            page.sendEvent('mousemove', 215 + 10 * c, 148);
-            console.log('i: ', 'po', 4 * c);
-            page.render('mouse-moved-'+c+'-' + '.png');
-          }, 100 * c);
+            page.sendEvent('mousemove', 215 +  c, 148);
+            console.log('i: ', 'po', c);
+            // page.render('mouse-moved-'+c+'-' + '.png');
+          }, 17 * c);
         })(i);
       }
       setTimeout(function () {
-        page.sendEvent('mousemove', 215 + pos.x-6, 148);
+        // page.sendEvent('mousemove', 215 + pos.x-6, 148);
         page.render('mouse-moved-last-' +  '.png');
         setTimeout(function () {
           page.sendEvent('mouseup', 215 + pos.y-6, 148);
@@ -205,7 +209,7 @@ page.open('http://www.guahao.com/register/mobile', function (status) {
           page.render('next-' + '.png');
           phantom.exit();
         }, 300);
-      }, 100 * (i + 2));
+      }, 17 * (i + 2));
     }, 2000);
 
   }, 4000);
