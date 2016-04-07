@@ -179,6 +179,7 @@ page.open('http://www.guahao.com/register/mobile', function (status) {
         phantom.exit();
       }
       console.log('get pos', pos.x, pos.y);
+      page.sendEvent('mousemove', 215, 148);
       page.sendEvent('mousedown', 215, 148);
 
       var i ;
