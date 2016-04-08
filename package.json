@@ -12,7 +12,9 @@
     "es6-promise": "^3.1.2",
     "koa": "^1.2.0",
     "koa-static": "^2.0.0",
-    "phantom": "^2.0.10"
+    "phantom": "^2.0.10",
+    "request": "^2.70.0",
+    "request-promise": "^2.0.1"
   },
   "devDependencies": {
     "eslint": "^2.7.0",

@@ -84,7 +84,46 @@ P.e[a.id].arr = [
   [48, 0, 272],
   [49, 0, 298],
   [50, 0, 316], [51, 0, 332], [54, 0, 349], [60, 0, 366], [66, 0, 384], [76, 0, 400], [81, 0, 417], [92, 0, 434], [100, 0, 451], [104, 0, 468], [106, 0, 485], [107, 0, 592], [108, 0, 618], [109, 0, 635], [112, 0, 652], [113, 0, 669], [114, 0, 689], [115, 0, 706], [116, 0, 857], [116, 0, 890], [117, 0, 1001], [118, 0, 1041], [119, 0, 1058], [120, 0, 1075], [121, 0, 1296],
-  [121, 0, 1441]
+  [121, 0, 1441],
+  [183,0,3040]
 ];
 
-console.log(ma.Z(a.id));
+let offsetX = 183,
+  gt = 'c9e986509b0a07b24a5463ded32b9d50',
+  challenge = 'ca9c5e62c623b1811a490f701a345d4d';
+
+var postData = {  
+  gt,
+  challenge,
+  imgload: 2077,
+  passtime: 5040,
+  userresponse: aa._(offsetX, challenge),
+  a:  ma.Z(a.id)
+};
+
+
+var url = 'http://api.geetest.com/ajax.php?';
+
+for(var key in postData){
+  url += [key,postData[key]].join('=')+'&';
+}
+url += 'callback=geetest_1460123774640';
+console.log(url);
+
+var request = require('request');
+var req = request.defaults({jar: true });
+req.get({
+  url,
+  headers:{
+    referer: 'http://www.guahao.com/register/mobile'
+  } 
+}, (err,response,body)=>{
+  console.log('body', body);
+});
+
+/*
+
+  curl -e   -> referer
+  -v verbose info
+*/
+
