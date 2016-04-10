@@ -111,16 +111,18 @@ url += 'callback=geetest_1460123774640';
 console.log(url);
 
 var request = require('request');
-var req = request.defaults({jar: true });
-req.get({
-  url,
-  headers:{
-    referer: 'http://www.guahao.com/register/mobile'
-  } 
-}, (err,response,body)=>{
-  console.log('body', body);
-});
-
+// var req = request.defaults({jar: true });
+// req.get({
+//   url,
+//   headers:{
+//     referer: 'http://www.guahao.com/register/mobile'
+//   } 
+// }, (err,response,body)=>{
+//   console.log('body', body);
+// });
+// request.get('http://www.guahao.com/register/mobile',(err,res,body)=>{
+//   console.log(body);
+// });
 /*
 
   curl -e   -> referer
