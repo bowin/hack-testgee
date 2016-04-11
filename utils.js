@@ -136,6 +136,7 @@ co(function*() {
     json: true,
   });
   config = JSON.parse(config);
+  //从geetest得到相关信息
   let geConfig = yield req({
     uri: 'http://api.geetest.com/get.php',
     qs: {
@@ -160,13 +161,19 @@ co(function*() {
   console.log('get offset: ', offset);
 
   // post
-  P.e[a.id].arr = path_183//.filter(arr=> arr[0] <= offset.x-6);
-  //P.e[a.id].arr.push(offset.x-6,0,2040)
+  P.e[a.id].arr = path_183.filter(arr=> arr[0] <= Math.floor(0.7 * (offset.x - 6)));
+  while (P.e[a.id].arr.slice(-1)[0][0] < offset.x - 6) {
+    P.e[a.id].arr.push([P.e[a.id].arr.slice(-1)[0][0] + 1, 0, P.e[a.id].arr.slice(-1)[0][2] + Math.floor(Math.random()*(30-15)+15)]);
+  }
+  console.log(JSON.stringify(P.e[a.id].arr));
+
+  let finishTime = P.e[a.id].arr.slice(-1)[0][2];
+  //P.e[a.id].arr.push(offset.x-6,0,finishTime)
   let postData = {
     gt,
     challenge,
     imgload: 2077,
-    passtime: P.e[a.id].arr.slice(-1)[0][2],
+    passtime: finishTime,
     userresponse: aa._(offset.x - 6, challenge),
     a: ma.Z(a.id)
   };
