@@ -163,7 +163,7 @@ co(function*() {
   // post
   P.e[a.id].arr = path_183.filter(arr=> arr[0] <= Math.floor(0.7 * (offset.x - 6)));
   while (P.e[a.id].arr.slice(-1)[0][0] < offset.x - 6) {
-    P.e[a.id].arr.push([P.e[a.id].arr.slice(-1)[0][0] + 1, 0, P.e[a.id].arr.slice(-1)[0][2] + Math.floor(Math.random()*(30-15)+15)]);
+    P.e[a.id].arr.push([P.e[a.id].arr.slice(-1)[0][0] + Math.floor(2*Math.random()+1), 0, P.e[a.id].arr.slice(-1)[0][2] + Math.floor(Math.random()*(30-15)+15)]);
   }
   console.log(JSON.stringify(P.e[a.id].arr));
 
@@ -172,7 +172,7 @@ co(function*() {
   let postData = {
     gt,
     challenge,
-    imgload: 2077,
+    imgload: 900,
     passtime: finishTime,
     userresponse: aa._(offset.x - 6, challenge),
     a: ma.Z(a.id)
