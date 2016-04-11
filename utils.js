@@ -68,7 +68,8 @@ P.e[a.id] = {};
 ma.p([-22, -20, 0], a.id);
 ma.W([0, 0, 0], a.id);
 
-P.e[a.id].arr = [
+P.e[a.id].arr = [];
+var path_124 = [
   [-26, -29, 0],
   [0, 0, 0],
   [0, 0, 73],
@@ -84,48 +85,99 @@ P.e[a.id].arr = [
   [48, 0, 272],
   [49, 0, 298],
   [50, 0, 316], [51, 0, 332], [54, 0, 349], [60, 0, 366], [66, 0, 384], [76, 0, 400], [81, 0, 417], [92, 0, 434], [100, 0, 451], [104, 0, 468], [106, 0, 485], [107, 0, 592], [108, 0, 618], [109, 0, 635], [112, 0, 652], [113, 0, 669], [114, 0, 689], [115, 0, 706], [116, 0, 857], [116, 0, 890], [117, 0, 1001], [118, 0, 1041], [119, 0, 1058], [120, 0, 1075], [121, 0, 1296],
-  [121, 0, 1441],
-  [183,0,3040]
+  [121, 0, 1441]
 ];
+
+var path_183 = [[-23, -24, 0], [0, 0, 0], [1, 0, 520], [2, 0, 559], [2, 0, 585], [3, 0, 609], [4, 0, 633], [4, 0, 657], [5, 0, 674], [6, 0, 691], [8, 0, 708], [10, -2, 726], [13, -2, 743], [16, -2, 760], [19, -2, 776], [25, -2, 794], [29, -2, 810], [33, -2, 828], [37, -2, 845], [41, -2, 862], [44, -2, 879], [47, -2, 896], [49, -2, 913], [51, -2, 931], [53, -2, 948], [55, -2, 965], [58, -2, 983], [61, -2, 1000], [64, -2, 1021], [67, -2, 1036], [71, -2, 1053], [76, -2, 1070], [79, -2, 1087], [83, -2, 1103], [87, -2, 1121], [92, -2, 1138], [95, -2, 1155], [101, -2, 1172], [105, -3, 1189], [108, -3, 1206], [111, -3, 1223], [114, -3, 1240], [117, -3, 1257], [120, -3, 1274], [122, -4, 1292], [125, -4, 1309], [127, -4, 1326], [129, -4, 1343], [131, -4, 1360], [133, -4, 1376], [134, -5, 1393], [135, -5, 1411], [136, -5, 1428], [137, -5, 1445], [138, -5, 1462], [139, -5, 1479], [141, -5, 1496], [142, -5, 1514], [143, -6, 1531], [144, -6, 1549], [145, -6, 1566], [146, -6, 1583], [146, -6, 1600], [147, -6, 1616], [149, -6, 1633], [149, -6, 1672], [150, -6, 1744], [151, -6, 1832], [152, -6, 1888], [152, -7, 1905], [153, -7, 1929], [153, -7, 1961], [154, -7, 1993], [155, -7, 2025], [155, -7, 2064], [156, -7, 2104], [157, -7, 2137], [158, -7, 2169], [158, -8, 2187], [159, -8, 2204], [160, -8, 2222], [161, -8, 2239], [162, -8, 2257], [163, -8, 2274], [164, -8, 2292], [165, -9, 2309], [167, -9, 2325], [168, -9, 2343], [169, -9, 2359], [169, -9, 2378], [170, -9, 2394], [171, -9, 2417], [172, -9, 2441], [172, -9, 2473], [173, -9, 2497], [173, -10, 2514], [174, -10, 2537], [175, -10, 2600], [176, -10, 2672], [177, -10, 2752], [177, -10, 2824], [177, -11, 2857], [178, -11, 2952], [179, -11, 3176], [179, -12, 3728], [179, -13, 3768], [179, -14, 3801], [178, -14, 3818], [178, -15, 3837], [177, -16, 3852], [176, -16, 3870], [176, -17, 3887], [176, -18, 3913], [175, -18, 3930], [175, -17, 4256], [175, -17, 4328], [175, -16, 4424], [176, -16, 6124], [177, -16, 6149], [178, -16, 6180], [178, -15, 6197], [179, -15, 6252], [179, -14, 6270], [179, -13, 6348], [179, -14, 6852], [180, -14, 6916], [181, -14, 6996], [182, -14, 7084], [182, -15, 7180], [183, -15, 7204], [183, -15, 7732], [184, -15, 8212], [183, -15, 8415], [182, -15, 8428], [182, -15, 8498]];
+
 
 let offsetX = 183,
   gt = 'c9e986509b0a07b24a5463ded32b9d50',
   challenge = 'ca9c5e62c623b1811a490f701a345d4d';
 
-var postData = {  
+var postData = {
   gt,
   challenge,
   imgload: 2077,
   passtime: 5040,
   userresponse: aa._(offsetX, challenge),
-  a:  ma.Z(a.id)
+  a: ma.Z(a.id)
 };
 
 
-var url = 'http://api.geetest.com/ajax.php?';
+//var url = 'http://api.geetest.com/ajax.php?';
+//
+//for(var key in postData){
+//  url += [key,postData[key]].join('=')+'&';
+//}
+//url += 'callback=geetest_1460123774640';
+//console.log(url);
 
-for(var key in postData){
-  url += [key,postData[key]].join('=')+'&';
-}
-url += 'callback=geetest_1460123774640';
-console.log(url);
+//var request = require('request');
+var request = require('request-promise');
+var co = require('co');
+var req = request.defaults({
+  jar: true,
+  headers: {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/37.0.2062.120 Safari/537.36;'
+  },
+});
+var calcOffset = require('./imageUtils');
+//import calOffset from './imageUtils';
 
-var request = require('request');
-// var req = request.defaults({jar: true });
-// req.get({
-//   url,
-//   headers:{
-//     referer: 'http://www.guahao.com/register/mobile'
-//   } 
-// }, (err,response,body)=>{
-//   console.log('body', body);
-// });
-// request.get('http://www.guahao.com/register/mobile',(err,res,body)=>{
-//   console.log(body);
-// });
-/*
+co(function*() {
+  let html = yield req({
+    uri: 'http://www.guahao.com/register/mobile',
+    method: 'GET'
+  });
+  let time = Date.now();
+  let config = yield req({
+    uri: 'http://www.guahao.com/geetest/start?_=' + time,
+    json: true,
+  });
+  config = JSON.parse(config);
+  let geConfig = yield req({
+    uri: 'http://api.geetest.com/get.php',
+    qs: {
+      gt: config.gt,
+      challenge: config.challenge,
+      product: 'float',
+      offline: false,
+      sandbox: true
+      //callback: 'geetest_'+ time
+    }
+  });
+  geConfig = geConfig.match(/Geetest\((.*false}),true/)[1];
+  geConfig = JSON.parse(geConfig);
+  const geetestImagePrefix = 'http://static.geetest.com/';
+  let gt = geConfig.gt,
+    challenge = geConfig.challenge,
+    bg = geetestImagePrefix + geConfig.bg,
+    fullbg = geetestImagePrefix + geConfig.fullbg;
 
-  curl -e   -> referer
-  -v verbose info
-*/
+  // calc offset x
+  let offset = yield calcOffset(bg, fullbg);
+  console.log('get offset: ', offset);
+
+  // post
+  P.e[a.id].arr = path_183//.filter(arr=> arr[0] <= offset.x-6);
+  //P.e[a.id].arr.push(offset.x-6,0,2040)
+  let postData = {
+    gt,
+    challenge,
+    imgload: 2077,
+    passtime: P.e[a.id].arr.slice(-1)[0][2],
+    userresponse: aa._(offset.x - 6, challenge),
+    a: ma.Z(a.id)
+  };
+  console.log('data to post', JSON.stringify(postData));
+  let checkRes = yield req({
+    uri: 'http://api.geetest.com/ajax.php',
+    method: 'GET',
+    referer: 'http://www.guahao.com/register/mobile',
+    qs: postData
+  });
+  console.log('get check res: ', JSON.stringify(checkRes));
+});
+
 

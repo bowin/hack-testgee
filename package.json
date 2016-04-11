@@ -9,7 +9,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "co": "^4.6.0",
     "es6-promise": "^3.1.2",
+    "jimp": "^0.2.21",
     "koa": "^1.2.0",
     "koa-static": "^2.0.0",
     "phantom": "^2.0.10",
