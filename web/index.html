@@ -1,28 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8">
-    <title>Title</title>
-    <script>
-      var arr = [[-23,24,0]];
-      var startX, startY,startTime;
-      $('#id').on('mousedown',function(e){
-        startX = e.originalEvent.pageX;
-        startY = e.originalEvent.pageY;
-        startTime = Date.now();
-        arr.push([0,0,0])
-      })
-      $('#id').on('mousemove',function(e){
-        arr.push([e.pageX,e.pageY, Date.now()-startTime]);
-      })
-      $('#id').on('mouseup',function(e){
-        $('p').text = arr
-      })
+    <title>拖一拖</title>
+    <script src="./jquery-1.12.3.min.js"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            console.log('start');
+            let start = 0;
+            let attr = [[-21, -22, 0], [0, 0, 0]];
+            let x0 = 0, y0 = 0, m = 0;
+
+            $('#btn').on('click', function () {
+                m = parseInt($('#m').val());
+            });
+
+            $('#big').on('mousedown', function (e) {
+                start = Date.now();
+                x0 = e.originalEvent.pageX;
+                y0 = e.originalEvent.pageY;
+                attr = [[-21, -22, 0], [0, 0, 0]];
+                $('#small').css('width', m).css('margin-left', e.originalEvent.offsetX);
+
+                $('#big').on('mousemove', function (e) {
+                    attr.push([e.originalEvent.pageX - x0, e.originalEvent.pageY - y0, Date.now() - start]);
+                    $('#p').text(e.originalEvent.pageX - x0);
+                });
+
+            }).on('mouseup', function (e) {
+                $('#big').off('mousemove');
+
+                attr.push([e.originalEvent.pageX - x0, e.originalEvent.pageY - y0, Date.now() - start]);
+                attr = attr.filter(function (i, j) {
+                    return j === 0 || i[0] >= 0;
+                });
+                $('#r').text(JSON.stringify(attr));
+            });
+        });
     </script>
-  </head>
-  <body>
-    <div id="main">
-      
+</head>
+<body>
+
+    <label for="m">距离</label>
+    <input type="text" name="m" id="m">
+    <button id="btn">开始</button>
+
+    <div>current position: <span id="p"></span></div>
+    <div id="big" style="margin: 100px; border: 1px solid; width: 300px; height: 30px; cursor: pointer">
+        <div id="small" style="background-color: grey; height: 100%; width: 0px; margin-left: 0px;"></div>
     </div>
-  </body>
+
+    <div id="r"></div>
+
+</body>
 </html>
