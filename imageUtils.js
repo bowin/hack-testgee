@@ -3,6 +3,7 @@ var co = require('co');
 var jimp = require('jimp');
 
 module.exports = function  calcOffset (bg_url, full_url){
+  var start = Date.now();
   return jimp.read(bg_url).then(bg=>{
     return jimp.read(full_url).then(fullbg => {
       let arr = [[-157, -58],
@@ -79,7 +80,7 @@ module.exports = function  calcOffset (bg_url, full_url){
               reject(err.stack);
             drawImage(image,cropImage,resolve)
           } );
-        })
+        });
       }
       return co(function*(){
         let imageBg =  yield genImage(bg);
@@ -99,20 +100,21 @@ module.exports = function  calcOffset (bg_url, full_url){
             let g = data[index + 1];
             let b = data[index + 2];
             if(r>250 && g<50 && b<50) {
-              linePoint.push({x,y})
+              linePoint.push({x,y});
               //return Promise.resolve({x,y})
             }
           }
-          console.log('lp len: ',linePoint.length);
+          // console.log('lp len: ',linePoint.length);
           if(linePoint.length>20){
+            linePoint[0].t = Date.now() - start;
             return Promise.resolve(linePoint[0]);
           }
           linePoint=[];
         }
-        return Promise.resolve({x:0,y:0})
+        return Promise.resolve({x:0,y:0});
       });
-    }).catch(err=> console.err(err.stack))
-  })
+    }).catch(err=> console.err(err.stack));
+  });
 };
 //var x = calcOffset('http://static.geetest.com/pictures/gt/df4b23de2/bg/73fc07001.jpg','http://static.geetest.com/pictures/gt/df4b23de2/df4b23de2.jpg');
 //x.then(res=> JSON.stringify(res));

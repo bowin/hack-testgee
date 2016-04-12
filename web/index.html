@@ -3,8 +3,26 @@
   <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script>
+      var arr = [[-23,24,0]];
+      var startX, startY,startTime;
+      $('#id').on('mousedown',function(e){
+        startX = e.originalEvent.pageX;
+        startY = e.originalEvent.pageY;
+        startTime = Date.now();
+        arr.push([0,0,0])
+      })
+      $('#id').on('mousemove',function(e){
+        arr.push([e.pageX,e.pageY, Date.now()-startTime]);
+      })
+      $('#id').on('mouseup',function(e){
+        $('p').text = arr
+      })
+    </script>
   </head>
   <body>
-    <div id="main"></div>
+    <div id="main">
+      
+    </div>
   </body>
 </html>
