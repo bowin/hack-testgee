@@ -118,7 +118,6 @@ var req = request.defaults({
 });
 var calcOffset = require('./imageUtils');
 var cheerio = require('cheerio');
-var captcha = require('./captcha');
 
 co(function*() {
   let html = yield req({
@@ -201,37 +200,37 @@ co(function*() {
     gzip: true
   });
   console.log('get check res: ', JSON.stringify(checkRes));
-  checkRes = JSON.parse(checkRes.slice(22,-1));
-  if(!checkRes.success){
+  checkRes = JSON.parse(checkRes.slice(22, -1));
+  if (!checkRes.success) {
     console.error('validate fail')
     process.exit(-2);
   }
   let validate = checkRes.validate;
+  let phone = '13100450784';
   let validateRes = yield req({
     uri: 'http://www.guahao.com/json/white/register/mobile',
     method: 'GET',
-    qs : {
-      mobile: '13148405302',
+    qs: {
+      mobile: phone,
       geetest_challenge: challenge,
       geetest_validate: validate,
-      geetest_seccode: validate+'|jordan',
-      imgCaptcha:'',
-      captchaType:'geetest',
+      geetest_seccode: validate + '|jordan',
+      imgCaptcha: '',
+      captchaType: 'geetest',
     },
-    headers:{
+    headers: {
       'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/37.0.2062.120 Safari/537.36',
       'Referer': 'http://www.guahao.com/register/mobile',
       'Accept': '*/*',
       'Accept-Encoding': 'gzip, deflate, sdch',
       'Accept-Language': 'zh-CN,zh;q=0.8',
       'Cache-Control': 'no-cache',
-      'Content-Type':'application/json;charset=UTF-8'
+      'Content-Type': 'application/json;charset=UTF-8'
     },
     gzip: true
   });
-  console.log('validate res: ',validateRes);
+  console.log('validate res: ', validateRes);
   //注册表单
-  let phone = '13148405302';
   let signData = crypto.createHash('md5').update("REG_MOBILE" + phone + mobileValidCode).digest('hex');
   let sendResult = yield request({
     uri: `http://www.guahao.com/validcode/json/send/${phone}/REG_MOBILE/${signData}/123`,
@@ -239,20 +238,20 @@ co(function*() {
     qs: {
       geetest_challenge: challenge,
       geetest_validate: validate,
-      geetest_seccode: validate+'|jordan',
+      geetest_seccode: validate + '|jordan',
       resend: 0,
-      imgCaptcha:'',
+      imgCaptcha: '',
       captchaType: 'geetest',
       _: Date.now()
     },
-    headers:{
+    headers: {
       'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/37.0.2062.120 Safari/537.36',
       'Referer': 'http://www.guahao.com/register/mobile',
-      'Accept':'application/json, text/javascript, */*; q=0.01',
-      'Host':'www.guahao.com',
-      'Cache-Control':'no-cache'
+      'Accept': 'application/json, text/javascript, */*; q=0.01',
+      'Host': 'www.guahao.com',
+      'Cache-Control': 'no-cache'
     },
-    gzip : true
+    gzip: true
   });
   console.log('send res', sendResult);
   //发送注册信息
@@ -265,17 +264,17 @@ co(function*() {
       csrf_token: csrfToken,
       action: 'register',
       loginIdType: 1,
-      mobile: null || '13148405302',
+      mobile: phone,
       geetest_challenge: challenge,
       geetest_validate: validate,
-      geetest_seccode: validate+'|jordan',
+      geetest_seccode: validate + '|jordan',
       mobileImgCode: smsCode,
       code: '',
-      mobile_alias: '13148405302',
+      mobile_alias: phone,
       password: 'xxxxxx',
     },
-    headers:{
-      'Accept':'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'
+    headers: {
+      'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'
     }
   });
 
