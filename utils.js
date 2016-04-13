@@ -279,6 +279,12 @@ co(function*() {
   });
 
   console.log('register res: ', registerResult);
+  if(registerResult.statusCode===302) {
+    console.log('siup up complete')
+  }
+  else{
+    console.log('siup up verify fail');
+  }
 
 }).catch(e => {
   console.error(e);
