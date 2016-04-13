@@ -17,6 +17,7 @@
             });
 
             $('#big').on('mousedown', function (e) {
+                $('#msg').text('');
                 start = Date.now();
                 x0 = e.originalEvent.pageX;
                 y0 = e.originalEvent.pageY;
@@ -31,11 +32,26 @@
             }).on('mouseup', function (e) {
                 $('#big').off('mousemove');
 
+                $('#msg').text('发送准备: ');
                 attr.push([e.originalEvent.pageX - x0, e.originalEvent.pageY - y0, Date.now() - start]);
                 attr = attr.filter(function (i, j) {
                     return j === 0 || i[0] >= 0;
                 });
                 $('#r').text(JSON.stringify(attr));
+                if(confirm('发送到服务器?')){
+                    $.ajax({
+                        url: '/offset/'+m,
+                        type: 'POST',
+                        dataType: 'json',
+                        data: {
+                            data: JSON.stringify(attr),
+                        },
+                        success: function(data){
+                            console.log(data)
+                            $('#msg').text('发送成功: ')
+                        }
+                    });
+                }
             });
         });
     </script>
@@ -50,7 +66,7 @@
     <div id="big" style="margin: 100px; border: 1px solid; width: 300px; height: 30px; cursor: pointer">
         <div id="small" style="background-color: grey; height: 100%; width: 0px; margin-left: 0px;"></div>
     </div>
-
+    <p><span id="msg"></span></p>
     <div id="r"></div>
 
 </body>

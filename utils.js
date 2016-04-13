@@ -156,8 +156,6 @@ co(function*() {
       'Referer': 'http://www.guahao.com/register/mobile'
     }
   });
-  // console.log(geConfig);
-  // geConfig = geConfig.match(/geeTestInit\((.*false}),true/)[1];
   geConfig = JSON.parse(geConfig.substring(12, geConfig.length - 1));
   const geetestImagePrefix = 'http://static.geetest.com/';
   let gt = geConfig.gt,
@@ -169,9 +167,21 @@ co(function*() {
   let offset = yield calcOffset(bg, fullbg);
   console.log('get offset: ', offset);
   console.log('m:', offset.x - 6);
+  yield getLine('iii');
 
-  let inJson = yield getLine('iii');
-  P.e[a.id].arr = JSON.parse(inJson);
+  let inJson = yield request({
+    uri: 'http://localhost:3000/offset/' + (offset.x - 6),
+    method: 'GET',
+    json: true
+  });
+
+  console.log('get path: ', inJson);
+
+  if (!inJson.success) {
+    console.error(inJson.error)
+    throw new Error('RedisNotFoundError');
+  }
+  P.e[a.id].arr = JSON.parse(inJson.data);
 
   let finishTime = P.e[a.id].arr[P.e[a.id].arr.length - 1][2];
   let postData = {
@@ -200,11 +210,18 @@ co(function*() {
     gzip: true
   });
   console.log('get check res: ', JSON.stringify(checkRes));
+  let removeThis = yield request({
+    url: 'http://localhost:3000/offset/' + (offset.x - 6)+'/remove',
+    method: 'POST',
+    form: {data: inJson.data}
+  });
+  console.log(removeThis);
   checkRes = JSON.parse(checkRes.slice(22, -1));
   if (!checkRes.success) {
     console.error('validate fail')
-    process.exit(-2);
+    throw new Error('GeetestValidateError');
   }
+  // validate ok
   let validate = checkRes.validate;
   let phone = '13100450784';
   let validateRes = yield req({
@@ -275,14 +292,15 @@ co(function*() {
     },
     headers: {
       'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'
-    }
+    },
+    simple: true
   });
 
   console.log('register res: ', registerResult);
-  if(registerResult.statusCode===302) {
+  if (registerResult.statusCode === 302) {
     console.log('siup up complete')
   }
-  else{
+  else {
     console.log('siup up verify fail');
   }
 
